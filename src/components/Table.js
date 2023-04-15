@@ -263,14 +263,16 @@ const data = [
 ]
 const Table = () => {
 
-    const [recordsPerPage, setRecordsPerPage] = useState(5);
+    const [recordsPerPage, setRecordsPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalRecords, setTotalRecords] = useState(data.length);// this will be available to you from api
+    const [sorted,setSorted]=useState(false);
 
     const ArrayPaginationNumbers = (totalRecords, recordsPerPage) => {
         const value = Math.ceil((totalRecords / recordsPerPage));
 
-        return Array.from(Array(value).keys())
+        return Array.from(Array(value).keys())  // it will be required
+
 
 
 
@@ -290,6 +292,32 @@ const Table = () => {
        // debugger;
 
         setState([...sortArray(state)]);
+         // Uncomment below if you want to sort the page wise data
+     //  setSorted(true);
+
+
+    }
+
+    const handleChange=(event)=>{
+        const value=event.target.value;
+        if(value.length>0){  // checking for empty string here --
+
+            // Regular expression are a way to search in a particular text or string --->
+        const regex = new RegExp(value, 'gi');
+
+
+            //   const regex = new RegExp(`/${value}/g`);
+               const filtereData=state.filter(ele=>{
+                   return regex.test(ele.name);
+               })
+       
+               setState([...filtereData]);
+
+        }else{
+            setState([...data]);
+        }
+
+       
 
 
     }
@@ -297,15 +325,24 @@ const Table = () => {
     const PaginateData = (data, currentPage, recordsPerPage) => {
 
         // whole logic of slicing will go here
+        // Uncomment below if you want to sort the page wise data
+        /* 
+        if(sorted){
+            return sortArray(data.slice((currentPage*recordsPerPage), (currentPage*recordsPerPage) + recordsPerPage))
+
+        }
+        */
 
         // You can use slice of splice to make it work ----->
-        return data.slice(currentPage, currentPage + recordsPerPage)
+        return data.slice((currentPage*recordsPerPage), (currentPage*recordsPerPage) + recordsPerPage)
 
     }
 
 
     const changePage = (pageNumber) => {
         setCurrentPage(pageNumber);
+         // Uncomment below if you want to sort the page wise data
+       // setSorted(false);
 
         // we are modifing the state ---->
 
@@ -322,6 +359,7 @@ const Table = () => {
             <button onClick={SortByField}>
                 Sort Data
             </button>
+            <input type='text' style={{marginLeft:"10px"}} placeholder='Search Here' onChange={handleChange}/>
 
             <table className="table">
                 <thead>

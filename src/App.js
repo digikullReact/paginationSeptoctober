@@ -3,6 +3,7 @@ import './App.css';
 import Table from './components/Table';
 import { Context } from './components/Context';
 import UseReducer from './components/UseReducer';
+import Useref from './components/Useref';
 
 
 function App() {
@@ -15,11 +16,12 @@ function App() {
       /**
        *  <Table />
        *  <Context/>
+       *    <UseReducer/>
        */
     } 
 
-    <UseReducer/>
-
+ 
+<Useref/>
    
 
       </div>

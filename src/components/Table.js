@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 
+import { CommonContext } from '..';
 
 const data = [
     {
@@ -262,6 +263,9 @@ const data = [
     }
 ]
 const Table = () => {
+
+   
+
 
     const [recordsPerPage, setRecordsPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(0);
